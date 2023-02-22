@@ -70,7 +70,7 @@ var updateUserControllerFunc = async (req, res) => {
 
 var deleteUserControllerFunc = async (req, res) => {
     var result = null;
-    const email = req.params.email;
+    const email = req.params;
     try {
         result = await userService.deleteUserDBService(email);
         if (result.status) {

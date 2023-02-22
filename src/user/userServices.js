@@ -81,13 +81,13 @@ module.exports.updateUserDBService = (id,userDetails) => {
 module.exports.deleteUserDBService = ( userDetails ) =>{
    return new Promise( 
       ( resolve, reject ) => {
-         userModel.findOneAndDelete(  { firstname: userDetails.firstname } , (errorvalue, result)=>{
+         userModel.findOneAndDelete(  { email: userDetails.email } , (errorvalue, result)=>{
             if(errorvalue) {
                reject({status: false, msg: "Datos Invalidos"});
             } else {
                if(result !=undefined &&  result !=null) {
-                  if(result.firstname == userDetails.firstname) {
-                     resolve({status: true,msg: `Usuario ${userDetails.firstname} eliminado`});
+                  if(result.email == userDetails.email) {
+                     resolve({status: true,msg: `Usuario ${userDetails.email} eliminado`});
                   }
                   else {
                      reject({status: false,msg: "Usuario no encontrado"});
