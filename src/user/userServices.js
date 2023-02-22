@@ -64,32 +64,17 @@ module.exports.searchUserDBService = (userDetails) => {
    })
 }
 
-module.exports.updateUserDBService = (userDetails) => {
-   return new Promise(function myFn(resolve, reject)  {
-      userModel.findOneAndUpdate(
-         {email: userDetails.email},
-         {$set:{
-            password: encryptor.encrypt(userDetails.password),
-            firstname: userDetails.firstname,
-            lastname: userDetails.lastname
-            }
-         },
-         {new: true},
-         function getresult(errorvalue, result) {
-         if(errorvalue) {
-            reject({status: false, msg: "Datos Invalidos"});
+module.exports.updateUserDBService = (id,userDetails) => {
+   userDetails.password = encryptor.encrypt(userDetails.password);
+
+   return new Promise(function(resolve, reject) {
+      userModel.findOneAndUpdate({_id:id}, userDetails, function getresult(errorvalue, result) {
+         if (errorvalue) {
+            reject({status: false, msg: "datos invalidos"});
+         } else{
+            resolve({status: true, msg: "usuario actualizado", usuarios:result})
          }
-         else {
-            if(result !=undefined &&  result !=null) {
-               if(result.email = userDetails.email) {
-                  resolve({status: true,msg: `Usuario con correo ${ userDetails.email } actualizado`});
-               }
-            }
-            else {
-               reject({status: false,msg: `Usuario con correo ${userDetails.email} no existente`});
-            }
-         }
-      });
+      })
    });
 }
 

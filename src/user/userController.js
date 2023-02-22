@@ -53,9 +53,9 @@ var searchUserControllerFunc = async (req, res) => {
 
 var updateUserControllerFunc = async (req, res) => {
     var result = null;
-    const email = req.params.email;
+    const id = req.params;
     try {
-        result = await userService.updateUserDBService(email);
+        result = await userService.updateUserDBService(req.params.id, req.body);
         if (result.status) {
             res.send({ "status": true, "message": result.msg });
         } else {
